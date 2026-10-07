@@ -1,0 +1,3 @@
+The transparent shivam-brush.png wordmark was made with the built-in image generation tool using the user's hero screenshot as a style reference.
+
+Prompt: Create a transparent PNG typography-only wordmark for a website hero. Exact text: small playful handwritten "I'm" above very large "SHIVAM". White dry-brush lettering with energetic rough ink edges, thick dynamic strokes, slightly rising baseline, similar to a youthful animator cartoon portfolio title. SHIVAM must be dominant, very wide landscape composition, white letters only, no other colors, no underline, no extra decorations, no background. Keep all strokes within image and trim excess space closely. Output intended as a transparent white headline asset on a black website.

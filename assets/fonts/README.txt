@@ -1,0 +1,1 @@
+SF Pro Display is resolved from fonts installed on the viewer device. Add an appropriately licensed webfont and update css/style.css for exact cross-platform rendering. System sans-serif is the fallback.
