@@ -201,3 +201,15 @@ body::before{display:block;position:absolute;z-index:-1;top:0;left:0;width:34vw;
 .inline-play>span{display:grid;place-items:center;width:68px;height:68px;border-radius:50%;background:#c4ff00;color:#111;font-size:24px;padding-left:4px;box-shadow:0 8px 35px #0005}
 .inline-play small{font-size:10px;letter-spacing:.1em;color:#fff;text-shadow:0 1px 4px #000;background:#090b1099;padding:4px 8px;border-radius:5px}
 .inline-reel-status{position:absolute;left:16px;right:16px;bottom:65px;background:#090b10e8;padding:12px;border-radius:8px;z-index:3;color:#fff!important;font-size:12px!important;margin:0!important}
+
+/* Featured projects: direct inline playback */
+.project-card{cursor:default}
+.project-card:has(video):hover{transform:none}
+.project-inline-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#08090e}
+.project-card[data-category="design"] .project-inline-video{position:relative;height:auto}
+.project-play{position:absolute;inset:0 0 52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:transparent;z-index:2;width:100%;color:white;cursor:pointer}
+.project-play span{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--lime);color:#111;font-size:22px;box-shadow:0 8px 35px #0005}
+.project-play small{background:#090b10bb;padding:5px 8px;border-radius:5px;letter-spacing:.1em;font-size:10px}
+.project-play[hidden],.project-status[hidden]{display:none!important}
+.project-play:focus-visible{outline:3px solid var(--lime);outline-offset:-4px;border-radius:18px}
+.project-status{position:absolute;z-index:3;bottom:54px;left:10px;right:10px;background:#111e;padding:10px;border-radius:10px;color:white;font-size:12px;pointer-events:none}
