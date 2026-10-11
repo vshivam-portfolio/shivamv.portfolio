@@ -13,11 +13,11 @@ window.PORTFOLIO = {
   watchUrl: '',
   poster: 'assets/images/showreel.webp'
 },
-  socials: { Instagram: '', Behance: '', YouTube: '', LinkedIn: '' },
+  socials: { Instagram: 'https://www.instagram.com/shivamvs_227?psln=MW5uaG01aW9iNDlwOQ%3D%3D&utm_source=qr', Behance: '', YouTube: '', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
   projects: [
     {sample:true, year:'2026', video:'', watchUrl:'', title:'RUN!', category:'motion', label:'2D Animation', thumbnail:'assets/thumbnails/project-01.webp', tools:'After Effects', objective:'Build a fast, playful movement study.', direction:'Bold yellow, graphic silhouettes and exaggerated poses.', approach:'Plan the action in a short storyboard, block key poses and refine timing.', challenge:'Keeping movement readable while the pace increases.', outcome:'A proposed animation study focused on rhythm and silhouette.'},
     {sample:true, year:'2026', video:'', watchUrl:'', title:'DAYDREAMS', category:'design', label:'Poster Design', thumbnail:'assets/thumbnails/project-02.webp', tools:'Photoshop · Illustrator', objective:'Explore nostalgia through a character poster.', direction:'Warm orange and a retro television character.', approach:'Establish a strong focal point, build a limited palette and balance supporting shapes.', challenge:'Balancing texture with a clean hierarchy.', outcome:'A sample poster direction for a personal design exploration.'},
-    {sample:true, year:'2026', video:'', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit', thumbnail:'assets/thumbnails/project-03.webp', tools:'Premiere Pro · After Effects', objective:'Explore a cinematic story through a short edit.', direction:'Neon lighting, tense atmosphere and purposeful cuts.', approach:'Start with the story beats, build an assembly and refine pacing around sound.', challenge:'Making the sequence clear without relying on dialogue.', outcome:'A concept editing brief for a short narrative experiment.'},
+    {sample:true, year:'2026', video:'assets/videos/APPLE.mp4', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit', thumbnail:'assets/thumbnails/project-03.webp', tools:'Premiere Pro · After Effects', objective:'Explore a cinematic story through a short edit.', direction:'Neon lighting, tense atmosphere and purposeful cuts.', approach:'Start with the story beats, build an assembly and refine pacing around sound.', challenge:'Making the sequence clear without relying on dialogue.', outcome:'A concept editing brief for a short narrative experiment.'},
     {sample:true, year:'2026', video:'', watchUrl:'', title:'GROOVY TUNES', category:'motion', label:'Music Visualizer', thumbnail:'assets/thumbnails/project-04.webp', tools:'After Effects', objective:'Turn a musical mood into a playful motion concept.', direction:'Bright green, rounded shapes and a friendly character.', approach:'Map accents to a beat grid and explore scale, bounce and repeatable loops.', challenge:'Maintaining rhythm without visual overload.', outcome:'A sample concept for a short music visualizer.'},
     {sample:true, year:'2026', video:'', watchUrl:'', title:'MIDNIGHT MIX', category:'design', label:'Music Poster', art:5, words:'MIDNIGHT<br>MIX', tools:'Illustrator · Photoshop', objective:'Create an expressive fictional music-event poster.', direction:'Oversized type, orange paper and offbeat composition.', approach:'Sketch typographic arrangements and test the reading order at thumbnail size.', challenge:'Preserving legibility in a deliberately energetic layout.', outcome:'An original CSS poster sample, ready to replace with finished artwork.'},
     {sample:true, year:'2026', video:'', watchUrl:'', title:'FRESH DROP', category:'social', label:'Social Campaign', art:7, words:'FRESH<br>DROP ✳', tools:'Photoshop · Illustrator', objective:'Build a cohesive fictional launch campaign.', direction:'Lime color, bold typography and simple graphic motifs.', approach:'Define a reusable layout and adapt it for square and vertical formats.', challenge:'Making variations feel consistent without repetition.', outcome:'An original social design sample with adaptable hierarchy.'},
@@ -59,15 +59,45 @@ window.PORTFOLIO = {
   }
 
   const grid = $('#project-grid');
-  projects.forEach((p,i) => {
-    const card = document.createElement('button');
+  projects.forEach(p => {
+    const card = document.createElement('article');
     card.className = 'project-card'; card.dataset.category = p.category;
     card.hidden = p.category !== 'video';
-    card.setAttribute('aria-label', `View ${p.title} case study`);
-    card.innerHTML = `<div class="project-art">${artwork(p)}</div><div class="project-info"><h3>${escape(p.title)}<span>↗</span></h3><p>${escape(p.label)}</p><small>${projectMeta(p)}</small></div>`;
-    card.addEventListener('click', () => openProject(i)); grid.append(card);
+    const url = externalLink(p.watchUrl);
+    const media = p.video
+      ? '<video class="project-inline-video" controls playsinline preload="metadata" aria-label="' + escape(p.title) + '" src="' + escape(p.video) + '"></video><button class="project-play" aria-label="Play ' + escape(p.title) + '"><span>▶</span><small>PLAY VIDEO</small></button><p class="project-status" role="status" hidden></p>'
+      : artwork(p);
+    card.innerHTML = '<div class="project-art">' + media + '</div><div class="project-info"><h3>' + escape(p.title) + '</h3><p>' + escape(p.label) + '</p><small>' + projectMeta(p) + '</small>' + (!p.video && url ? '<p><a class="text-link" href="' + escape(url) + '" target="_blank" rel="noopener noreferrer">Watch video ↗</a></p>' : '') + '</div>';
+    grid.append(card);
+    const video = card.querySelector('video');
+    if (!video) return;
+    const play = card.querySelector('.project-play');
+    const status = card.querySelector('.project-status');
+    video.addEventListener('loadedmetadata', () => {
+      if (video.paused && video.currentTime === 0 && video.duration > .05) video.currentTime = .05;
+    }, { once: true });
+    play.addEventListener('click', () => {
+      if (video.ended) video.currentTime = 0;
+      const started = video.play();
+      if (started) started.catch(() => {
+        status.textContent = 'Could not start this video. Check the file or use the play control.';
+        status.hidden = false;
+      });
+    });
+    video.addEventListener('playing', () => { play.hidden = true; status.hidden = true; });
+    video.addEventListener('ended', () => { play.hidden = false; });
+    video.addEventListener('error', () => {
+      status.textContent = 'Video unavailable. Check its filename and upload.';
+      status.hidden = false;
+    });
   });
-  $('#filter-status').textContent = `${projects.filter(p => p.category === 'video').length} projects shown`;
+  // Keep only one video playing, including the showreel.
+  document.addEventListener('play', event => {
+    if (event.target.tagName === 'VIDEO') {
+      $$('video').forEach(video => { if (video !== event.target) video.pause(); });
+    }
+  }, true);
+  $('#filter-status').textContent = projects.filter(p => p.category === 'video').length + ' projects shown';
   function openModal(content) {
     previousFocus = document.activeElement;
     $('#modal-content').innerHTML = content;
@@ -87,12 +117,6 @@ window.PORTFOLIO = {
     const r = modal.getBoundingClientRect();
     if(e.target === modal && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) closeModal();
   });
-  function openProject(i) {
-    const p = projects[i];
-    const watchUrl = externalLink(p.watchUrl);
-    const preview = p.video ? mediaPreview(p.video, p.thumbnail, 'project-video') : `<div class="project-art modal-image">${artwork(p)}</div>`;
-    openModal(`<p class="case-meta">${escape(p.label)} · ${projectMeta(p)}</p><h2 id="modal-title">${escape(p.title)}</h2>${preview}${watchUrl ? `<p><a class="button lime" href="${escape(watchUrl)}" target="_blank" rel="noopener noreferrer">Watch full video ↗</a></p>` : ''}<div class="case-grid">${[['Objective',p.objective],['Creative direction',p.direction],['Approach',p.approach],['Tools',p.tools],['Challenge',p.challenge],['Outcome',p.outcome]].map(([h,t])=>`<section><h3>${h}</h3><p>${escape(t)}</p></section>`).join('')}</div>${p.sample ? '<p class="case-meta" style="margin-top:24px">Sample case study — replace with your actual workflow and finished work.</p>' : ''}`);
-  }
   const reel = config.showreel || {};
   const oldFrame = $('.reel-frame');
   const reelFrame = document.createElement('div');
@@ -129,7 +153,7 @@ window.PORTFOLIO = {
   $$('[data-filter]').forEach(button => button.addEventListener('click', () => {
     $$('[data-filter]').forEach(b => { const selected = b === button; b.classList.toggle('selected',selected); b.setAttribute('aria-pressed',String(selected)); });
     let count = 0;
-    $$('.project-card').forEach(c => { c.hidden = c.dataset.category !== button.dataset.filter; if(!c.hidden) count++; });
+    $$('.project-card').forEach(c => { c.hidden = c.dataset.category !== button.dataset.filter; if(!c.hidden) count++; else c.querySelector('video')?.pause(); });
     $('#filter-status').textContent = `${count} projects shown`;
     if(!motion.matches) $$('.project-card').filter(c => !c.hidden).forEach((card,i) => {
       card.getAnimations().forEach(a => a.cancel());
