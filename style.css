@@ -228,6 +228,7 @@ body::before{display:block;position:absolute;z-index:-1;top:0;left:0;width:34vw;
 .nav-chapter{font-size:8px;font-weight:400;color:#8650b5}
 .nav-playhead{position:absolute;z-index:2;left:0;top:9px;bottom:9px;width:2px;background:linear-gradient(#655bff,#b283dd 55%,#ecd58c);box-shadow:0 0 10px 2px #b190e755,0 0 24px 5px #9d72c625;pointer-events:none;will-change:transform}
 .nav-timecode{flex-shrink:0;min-width:88px;text-align:right;color:#b1aaba;font:bold 11px/1 ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums}
+.timeline-header .menu,.nav-mobile-progress{display:none}
 .timeline-header .menu{display:none}.timeline-header .nav-mobile-progress{display:block;position:absolute;z-index:4;top:0;left:0;height:3px;width:100%;transform:scaleX(var(--timeline-progress,0));transform-origin:left;background:linear-gradient(90deg,#7056e5,#dfc38c);box-shadow:0 0 10px #b190e7;pointer-events:none}
 @media(max-width:800px){
  .header.timeline-header{height:66px;padding:0 16px;gap:15px}
@@ -238,6 +239,7 @@ body::before{display:block;position:absolute;z-index:-1;top:0;left:0;width:34vw;
  .timeline-header #navigation::before,.timeline-header .nav-playhead{display:none}
  .timeline-header #navigation a{padding:10px;border-radius:6px}
  .timeline-header #navigation a.active{background:#9565d31a}
+ .nav-mobile-progress{display:block;position:absolute;bottom:0;left:0;height:2px;width:100%;transform:scaleX(var(--timeline-progress,0));transform-origin:left;background:linear-gradient(90deg,#7056e5,#dfc38c);box-shadow:0 0 8px #b190e766}
  .nav-mobile-progress{top:0;bottom:auto;height:3px}
 }
 @media(prefers-reduced-motion:reduce){.timeline-header #navigation a{transition:none}.nav-playhead{box-shadow:none}}
@@ -248,3 +250,6 @@ body::before{display:block;position:absolute;z-index:-1;top:0;left:0;width:34vw;
 /* Keep the hero photo clean without the old portrait-editor card backing. */
 .hero .portrait-stage::before{display:none}
 .about .about-closing{margin-top:14px;color:var(--lime);font-weight:700}
+
+/* Keep the featured projects visible on small screens even if the reveal observer misses them. */
+@media(max-width:800px){.js-motion .projects.reveal{opacity:1;transform:none}}
