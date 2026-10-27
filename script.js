@@ -16,11 +16,7 @@ window.PORTFOLIO = {
     {sample:true, year:'2026', video:'assets/videos/APPLE.mp4', watchUrl:'', title:'Tech Style', category:'video', label:'Animated Short / Edit',},
     {sample:true, year:'2026', video:'assets/videos/sample1.mp4', watchUrl:'', title:'Motion Graphic', category:'video', label:'Animated Short / Edit',},
     {sample:true, year:'2026', video:'assets/videos/One8.mp4', watchUrl:'', title:'Documentary Style', category:'video', label:'Animated Short / Edit',},
-};
-
-
-/* WEBSITE BEHAVIOR — normally no edits needed below this line. */
-/* Standalone portfolio: no build step, network dependency or framework. */    
+};  
 (() => {
   'use strict';
   const $ = (selector, root = document) => root.querySelector(selector);
