@@ -11,12 +11,11 @@ window.PORTFOLIO = {
  
   socials: { Instagram: 'https://www.instagram.com/edithive.studio?psln=MTRtbGYzcmN0NWxrYg%3D%3D&utm_source=qr', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
   projects: [
-   {sample:true, year:'2026', video:'assets/videos/realestate.mp4', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit',},
-   {sample:true, year:'2026', video:'assets/videos/showreel.mp4', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/APPLE.mp4', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/sample1.mp4', watchUrl:'', title:'LOST SIGNAL', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/One8.mp4', watchUrl:'', title:'BLUE HOUR', category:'video', label:'Travel Edit Concept', art:8, words:'BLUE<br>HOUR /'}
-  ]
+   {sample:true, year:'2026', video:'assets/videos/realestate.mp4', watchUrl:'', title:'Real Estate Reel', category:'video', label:'Animated Short / Edit',},
+   {sample:true, year:'2026', video:'assets/videos/showreel.mp4', watchUrl:'', title:'Podcast Reel', category:'video', label:'Animated Short / Edit',},
+    {sample:true, year:'2026', video:'assets/videos/APPLE.mp4', watchUrl:'', title:'Tech Style', category:'video', label:'Animated Short / Edit',},
+    {sample:true, year:'2026', video:'assets/videos/sample1.mp4', watchUrl:'', title:'Motion Graphic', category:'video', label:'Animated Short / Edit',},
+    {sample:true, year:'2026', video:'assets/videos/One8.mp4', watchUrl:'', title:'Documentary Style', category:'video', label:'Animated Short / Edit',},
 };
 
 
