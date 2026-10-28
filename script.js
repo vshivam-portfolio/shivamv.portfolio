@@ -8,22 +8,18 @@ window.PORTFOLIO = {
   // Put your photo in assets/images/, then change this image path.
   // fit: 'cover' fills the frame; 'contain' shows the entire photo/cutout.
   hero: { image: 'assets/images/shivam.png', alt: 'Shivam against purple and cyan studio lighting', fit: 'cover', position: '50% 50%' },
- 
-  socials: { Instagram: 'https://www.instagram.com/edithive.studio?psln=MTRtbGYzcmN0NWxrYg%3D%3D&utm_source=qr', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
-  projects: [
-   {sample:true, year:'2026', video:'assets/videos/realestate.mp4', watchUrl:'', title:'Real Estate Reel', category:'video', label:'Animated Short / Edit',},
-   {sample:true, year:'2026', video:'assets/videos/showreel.mp4', watchUrl:'', title:'Podcast Reel', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/APPLE.mp4', watchUrl:'', title:'Tech Style', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/sample1.mp4', watchUrl:'', title:'Motion Graphic', category:'video', label:'Animated Short / Edit',},
-    {sample:true, year:'2026', video:'assets/videos/One8.mp4', watchUrl:'', title:'Documentary Style', category:'video', label:'Animated Short / Edit',},
-};  
+  socials: { Instagram: 'https://www.instagram.com/shivamvs_227?psln=MW5uaG01aW9iNDlwOQ%3D%3D&utm_source=qr', Behance: '', YouTube: '', LinkedIn: '' },
+};
+
+
+/* WEBSITE BEHAVIOR — normally no edits needed below this line. */
+/* Standalone portfolio: no build step, network dependency or framework. */    
 (() => {
   'use strict';
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   // Replace these sample studies with your real projects and assets.
   const config = window.PORTFOLIO || {};
-  const projects = config.projects || [];
   const portrait = $('.hero-portrait');
   if(portrait) {
     const hero = config.hero || {};
@@ -47,21 +43,12 @@ window.PORTFOLIO = {
     return `<video class="${className}" controls playsinline preload="metadata" ${poster ? `poster="${escape(poster)}"` : ''} src="${escape(video)}">Your browser does not support video playback.</video><p class="media-error" role="status" hidden>Could not load this video. Check the filename and try an MP4 encoded with H.264.</p>`;
   }
 
-  const grid = $('#project-grid');
-  projects.forEach(p => {
-    const card = document.createElement('article');
-    card.className = 'project-card'; card.dataset.category = p.category;
-    card.hidden = false;
-    const url = externalLink(p.watchUrl);
-    const media = p.video
-      ? '<video class="project-inline-video" controls playsinline preload="metadata" aria-label="' + escape(p.title) + '" src="' + escape(p.video) + '"></video><button class="project-play" aria-label="Play ' + escape(p.title) + '"><span>▶</span><small>PLAY VIDEO</small></button><p class="project-status" role="status" hidden></p>'
-      : artwork(p);
-    card.innerHTML = '<div class="project-art">' + media + '</div><div class="project-info"><h3>' + escape(p.title) + '</h3><p>' + escape(p.label) + '</p><small>' + projectMeta(p) + '</small>' + (!p.video && url ? '<p><a class="text-link" href="' + escape(url) + '" target="_blank" rel="noopener noreferrer">Watch video ↗</a></p>' : '') + '</div>';
-    grid.append(card);
-    const video = card.querySelector('video');
-    if (!video) return;
-    const play = card.querySelector('.project-play');
-    const status = card.querySelector('.project-status');
+// Project cards are in the HTML so they remain visible if script setup fails.
+  $$('.project-card').forEach(card => {
+    const video = $('video', card);
+    const play = $('.project-play', card);
+    const status = $('.project-status', card);
+    if (!video || !play || !status) return;
     video.addEventListener('loadedmetadata', () => {
       if (video.paused && video.currentTime === 0 && video.duration > .05) video.currentTime = .05;
     }, { once: true });
