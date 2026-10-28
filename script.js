@@ -8,7 +8,7 @@ window.PORTFOLIO = {
   // Put your photo in assets/images/, then change this image path.
   // fit: 'cover' fills the frame; 'contain' shows the entire photo/cutout.
   hero: { image: 'assets/images/shivam.png', alt: 'Shivam against purple and cyan studio lighting', fit: 'cover', position: '50% 50%' },
-  socials: { Instagram: 'https://www.instagram.com/shivamvs_227?psln=MW5uaG01aW9iNDlwOQ%3D%3D&utm_source=qr', Behance: '', YouTube: '', LinkedIn: '' },
+  socials: { Instagram: 'https://www.instagram.com/edithive.studio?psln=MTRtbGYzcmN0NWxrYg%3D%3D&utm_source=qr', Behance: '', YouTube: '', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
 };
 
 
