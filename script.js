@@ -8,7 +8,7 @@ window.PORTFOLIO = {
   // Put your photo in assets/images/, then change this image path.
   // fit: 'cover' fills the frame; 'contain' shows the entire photo/cutout.
   hero: { image: 'assets/images/shivam.png', alt: 'Shivam against purple and cyan studio lighting', fit: 'cover', position: '50% 50%' },
-  socials: { Instagram: 'https://www.instagram.com/edithive.studio?psln=MTRtbGYzcmN0NWxrYg%3D%3D&utm_source=qr', Behance: '', YouTube: '', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
+  socials: { Instagram: 'https://www.instagram.com/edithive.studio?psln=MTRtbGYzcmN0NWxrYg%3D%3D&utm_source=qr', LinkedIn: 'https://www.linkedin.com/in/shivam-vishwakarma-91b0b040a/' },
 };
 
 
@@ -49,19 +49,25 @@ window.PORTFOLIO = {
     const play = $('.project-play', card);
     const status = $('.project-status', card);
     if (!video || !play || !status) return;
+    video.controls = false;
     video.addEventListener('loadedmetadata', () => {
       if (video.paused && video.currentTime === 0 && video.duration > .05) video.currentTime = .05;
     }, { once: true });
     play.addEventListener('click', () => {
       if (video.ended) video.currentTime = 0;
+      video.controls = true;
       const started = video.play();
       if (started) started.catch(() => {
+        video.controls = false;
         status.textContent = 'Could not start this video. Check the file or use the play control.';
         status.hidden = false;
       });
     });
     video.addEventListener('playing', () => { play.hidden = true; status.hidden = true; });
-    video.addEventListener('ended', () => { play.hidden = false; });
+    video.addEventListener('pause', () => {
+      if (!video.ended) { video.controls = false; play.hidden = false; }
+    });
+    video.addEventListener('ended', () => { video.controls = false; play.hidden = false; });
     video.addEventListener('error', () => {
       status.textContent = 'Video unavailable. Check its filename and upload.';
       status.hidden = false;
